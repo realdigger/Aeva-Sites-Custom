@@ -14,6 +14,7 @@ if (!defined('SMF'))
 
 global $sites;
 
+/* -- NEW CUSTOM SITES -- */
 $sites[] = array(
     'id' => 'vk',
     'title' => 'VKontakte video',
@@ -33,4 +34,16 @@ $sites[] = array(
     'lookup-skip-empty' => true,
 );
 
+/* -- CUSTOM SETTINGS FOR EXISTING SITES -- */
+foreach ($sites as $si => $te) {
+    if ($te['id'] == 'vimeo') {
+        // http://vimeo.com/69277800
+        // http://player.vimeo.com/video/69277800
+        // http://vimeo.com/channels/staffpicks/69208253
+        // http://vimeo.com/ondemand/somegirls/69277800
+        // http://vimeo.com/groups/musicvideo/videos/68422599
+        $sites[$si]['pattern'] = 'http://(?:www\.|player\.)?vimeo\.com/(?:video/|channels/[A-Za-z0-9_-]+/|ondemand/[A-Za-z0-9_-]+/|groups/[A-Za-z0-9_-]+/videos/)?(\d{1,12})';
+        $sites[$si]['movie'] = 'http://vimeo.com/moogaloop.swf?clip_id=$2&server=vimeo.com&fullscreen=1&show_title=1&show_byline=1&show_portrait=0&color=01AAEA';
+    }
+}
 ?>
