@@ -36,6 +36,7 @@ $sites[] = array(
 
 /* -- CUSTOM SETTINGS FOR EXISTING SITES -- */
 foreach ($sites as $si => $te) {
+    // Fix for vimeo.com
     if ($te['id'] == 'vimeo') {
         // http://vimeo.com/69277800
         // http://player.vimeo.com/video/69277800
@@ -45,5 +46,20 @@ foreach ($sites as $si => $te) {
         $sites[$si]['pattern'] = 'http://(?:www\.|player\.)?vimeo\.com/(?:video/|channels/[A-Za-z0-9_-]+/|ondemand/[A-Za-z0-9_-]+/|groups/[A-Za-z0-9_-]+/videos/)?(\d{1,12})';
         $sites[$si]['movie'] = 'http://vimeo.com/moogaloop.swf?clip_id=$2&server=vimeo.com&fullscreen=1&show_title=1&show_byline=1&show_portrait=0&color=01AAEA';
     }
+    // Fix for video.yandex.ru
+    if ($te['id'] == 'yax') {
+        // http://video.yandex.ru/users/pugachev-alexander/view/8866/
+        $sites[$si]['website'] = 'http://video.yandex.ru';
+        $sites[$si]['pattern'] = '(?:http://flv\.video\.yandex\.ru/lite/([\w-]+)/(\w+\.\d+)|http://video\.yandex\.ru/users/([\w-]+)/view/\d+/?#id(\w+\.\d+))';
+        $sites[$si]['movie'] = 'http://static.video.yandex.ru/lite/$2$4/$3$5';
+        $sites[$si]['fix-html-pattern'] = '(?:<object width="(\d+)" height="(\d+)"><param name="video" value="http://flv\.video\.yandex\.ru/lite/([\w-]+)/(\w+\.\d+)/">.*?</object>)';
+        $sites[$si]['fix-html-url'] = 'http://static.video.yandex.ru/lite/$3/$4#w$1-h$2';
+        $sites[$si]['lookup-url'] = 'http://video\.yandex\.ru/users/[\w-]+/view/\d+/?';
+        $sites[$si]['lookup-pattern'] = array(
+            'id' => '\[flash=\d+,\d+,http://static\.video\.yandex\.ru/lite/[\w-]+/(\w+\.\d+)/]',
+            'w' => '\[flash=(d+),d+,',
+            'h' => '\[flash=d+,(d+),');
+    }
+
 }
 ?>
