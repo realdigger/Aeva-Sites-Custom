@@ -51,7 +51,21 @@ $sites[] = array(
     'lookup-title' => true,
     'fix-html-pattern' => '<object [^>]*><param name=movie value="$1">.*?</object>',
     'fix-html-url' => 'http://www.vesti.ru/videos?vid=$2'
-
+);
+// rpod.ru
+$sites[] = array(
+    // http://rpod.ru/305459
+    // TODO: http://java-se.rpod.ru/305459.html
+    'id' => 'rpod',
+    'title' => 'Rpod.ru',
+    'website' => 'http://rpod.ru',
+    'type' => 'custom',
+    'pattern' => 'http://(?:www\.)?rpod\.ru/(\d+)#id(\d+)',
+    'movie' => 'http://s.rpod.ru/swf/playa.swf?xmlURL=http%3A%2F%2Fs.rpod.ru%2Fxml%2Fvideo%2Fa$3.xml',
+    'size' => array(500, 400),
+    'lookup-title' => true,
+    'lookup-url' => 'http://(?:www\.)?rpod\.ru/(\d+)',
+    'lookup-pattern' => array('id' => 'rpod\.ru/get/\d+/(\d+)/flv'),
 );
 
 /* -- CUSTOM SETTINGS FOR EXISTING SITES -- */
@@ -95,5 +109,6 @@ foreach ($sites as $si => $te) {
         $sites[$si]['lookup-pattern'] = array('id' => 'video/embed/(\d+)"');
         $sites[$si]['lookup-title'] = true;
     }
+
 }
 ?>
