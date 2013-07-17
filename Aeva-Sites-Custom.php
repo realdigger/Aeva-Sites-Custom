@@ -15,7 +15,10 @@ if (!defined('SMF'))
 global $sites;
 
 /* -- NEW CUSTOM SITES -- */
+// vk.com
 $sites[] = array(
+    // http://vk.com/video98959839_162198496
+    // http://vk.com/video3243223_162783355?d=1&t=27
     'id' => 'vk',
     'title' => 'VKontakte video',
     'website' => 'http://vk.com',
@@ -32,6 +35,23 @@ $sites[] = array(
     'lookup-url' => 'http://(?:www\.)?vk(?:ontakte\.ru|\.com)/(?:.+=)?video([0-9\-]+)_([0-9]+)[^:\s#]*',
     'lookup-pattern' => array('hash' => '\\\\\\"hash2\\\\\\":\\\\\\"([a-zA-Z0-9]+)\\\\\\"'),
     'lookup-skip-empty' => true,
+);
+// vesti.ru
+$sites[] = array(
+    // http://www.vesti.ru/videos?vid=522693&cid=1
+    'id' => 'vst',
+    'title' => 'Vesti.ru',
+    'website' => 'http://www.vesti.ru',
+    'type' => 'custom',
+    'added' => '5.2',
+    'pattern' => 'http://(?:www\.)?vesti\.ru/(?:videos\?vid=)(\d+)',
+    'movie' => 'http://www.vesti.ru/i/flvplayer_videoHost.swf?vid=$2&fbv=true&isHome=false',
+    'size' => array(408, 356),
+    'show-link' => true,
+    'lookup-title' => true,
+    'fix-html-pattern' => '<object [^>]*><param name=movie value="$1">.*?</object>',
+    'fix-html-url' => 'http://www.vesti.ru/videos?vid=$2'
+
 );
 
 /* -- CUSTOM SETTINGS FOR EXISTING SITES -- */
