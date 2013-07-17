@@ -112,7 +112,7 @@ foreach ($sites as $si => $te) {
     if ($te['id'] == 'smo') {
         // http://smotri.com/video/view/?id=v24802498bff
         $sites[$si]['pattern'] = 'http://(?:www\.)?smotri\.com/video/view/\?id=v([0-9a-f]{10,})';
-        $sites[$si]['movie'] = 'http://pics.smotri.com/player.swf?file=v$2&bufferTime=3&autoStart=true&str_lang=rus&xmlsource=http%3A%2F%2Fpics.smotri.com%2Fcskins%2Fblue%2Fskin_color.xml&xmldatasource=http%3A%2F%2Fpics.smotri.com%2Fskin_ng.xml';
+        $sites[$si]['movie'] = 'http://pics.smotri.com/player.swf?file=v$2&bufferTime=3&autoStart=false&str_lang=rus&xmlsource=http%3A%2F%2Fpics.smotri.com%2Fcskins%2Fblue%2Fskin_color.xml&xmldatasource=http%3A%2F%2Fpics.smotri.com%2Fskin_ng.xml';
         $sites[$si]['lookup-title'] = true;
     }
 }
