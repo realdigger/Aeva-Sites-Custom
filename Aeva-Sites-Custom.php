@@ -49,6 +49,7 @@ foreach ($sites as $si => $te) {
     // Fix for video.yandex.ru
     if ($te['id'] == 'yax') {
         // http://video.yandex.ru/users/pugachev-alexander/view/8866/
+        // TODO: http://video.yandex.ru/users/sergevz/view/484/?cauthor=ruzlena&cid=3#
         $sites[$si]['website'] = 'http://video.yandex.ru';
         $sites[$si]['pattern'] = '(?:http://flv\.video\.yandex\.ru/lite/([\w-]+)/(\w+\.\d+)|http://video\.yandex\.ru/users/([\w-]+)/view/\d+/?#id(\w+\.\d+))';
         $sites[$si]['movie'] = 'http://static.video.yandex.ru/lite/$2$4/$3$5';
@@ -59,7 +60,20 @@ foreach ($sites as $si => $te) {
             'id' => '\[flash=\d+,\d+,http://static\.video\.yandex\.ru/lite/[\w-]+/(\w+\.\d+)/]',
             'w' => '\[flash=(d+),d+,',
             'h' => '\[flash=d+,(d+),');
+        $sites[$si]['lookup-title'] = true;
     }
-
+    // Fix for rutube.ru
+    if ($te['id'] == 'rut') {
+        // http://rutube.ru/video/2f44d7dd01eacf0fc15f1eb0156cb877/?bmstart=1591
+        // http://rutube.ru/video/2f44d7dd01eacf0fc15f1eb0156cb877
+        // TODO: http://rutube.ru/tracks/1869729.html?v=b772eac9a287fb0494eda
+        // TODO: http://rutube.ru/video/embed/6433492?wmode=direct
+        $sites[$si]['plugin'] = 'html';
+        $sites[$si]['pattern'] = 'http://(?:www\.)?rutube\.ru/video/([0-9a-f]{32})*#id(\d+)';
+        $sites[$si]['movie'] = '<div style="margin-top: 15px;"><iframe width="470" height="353" src="http://rutube.ru/video/embed/$3" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen></iframe></div>';
+        $sites[$si]['lookup-url'] = 'http://(?:www\.)?rutube\.ru/video/([0-9a-f]{32})';
+        $sites[$si]['lookup-pattern'] = array('id' => 'video/embed/(\d+)"');
+        $sites[$si]['lookup-title'] = true;
+    }
 }
 ?>
