@@ -67,6 +67,18 @@ $sites[] = array(
     'lookup-url' => 'http://(?:www\.)?rpod\.ru/(\d+)',
     'lookup-pattern' => array('id' => 'rpod\.ru/get/\d+/(\d+)/flv'),
 );
+// coub.com
+$sites[] = array(
+    'id' => 'coub',
+    'title' => 'Coub.com',
+    'website' => 'http://Coub.com',
+    'type' => 'custom',
+    'plugin' => 'html',
+    'pattern' => 'http://(?:www\.)?coub.com/view/([0-9a-z]{8})',
+    'size' => array(640, 360),
+    'movie' => '<iframe src="http://coub.com/embed/$2?muted=false&amp;autostart=false&amp;originalSize=false&amp;hideTopBar=false&amp;noSiteButtons=false&amp;startWithHD=false" allowfullscreen="true" frameborder="0" width="640" height="360"></iframe>',
+);
+
 
 /* -- CUSTOM SETTINGS FOR EXISTING SITES -- */
 foreach ($sites as $si => $te) {
