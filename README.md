@@ -15,3 +15,5 @@ For Aeva-Lite rename Aeva-Sites-Custom.php to Subs-Aeva-Custom.php
 
 2013-07-18. Fixed rutube.ru embedding. Fixed smotri.com embedding. Support for vesti.ru added. Support for rpod.ru added.
 
+2013-08-29. Support for coub.com added.
+
