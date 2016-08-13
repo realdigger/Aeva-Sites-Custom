@@ -14,6 +14,7 @@ For Aeva-Lite rename Aeva-Sites-Custom.php to Subs-Aeva-Custom.php
 * 2013-07-17. Fixed video.yandex.ru embedding.
 * 2013-07-18. Fixed rutube.ru embedding. Fixed smotri.com embedding. Support for vesti.ru added. Support for rpod.ru added.
 * 2013-08-29. Support for coub.com added.
+* 2016-08-12. Change youtube embedding to html5 video
 
 ## Описание
 Файл с поддержкой дополнительных сайтов и исправлениями встроенных для мода Aeva Media http://media.noisen.com/item/2765/
@@ -26,3 +27,4 @@ For Aeva-Lite rename Aeva-Sites-Custom.php to Subs-Aeva-Custom.php
 * 2013-07-17. Исправлена поддержка video.yandex.ru.
 * 2013-07-18. Исправлена поддержка rutube.ru. Исправлена поддержка smotri.com. Добавлена поддержка vesti.ru added. Добавлена поддержка rpod.ru.
 * 2013-08-29. Добавлена поддержка coub.com.
+* 2016-08-12. Встраивание youtube изменено на html5 video
