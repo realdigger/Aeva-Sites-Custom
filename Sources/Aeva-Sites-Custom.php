@@ -3,14 +3,17 @@
  * Aeva-Sites-Custom.php
  * By Rene-Gilles Deberdt
  *********************************************************************************
+ * Updated and fixed by digger mysmf.ru
+ *********************************************************************************
  * This program is distributed in the hope that it is and will be useful, but
  * WITHOUT ANY WARRANTIES; without even any implied warranty of MERCHANTABILITY
  * or FITNESS FOR A PARTICULAR PURPOSE.
  ********************************************************************************/
 
 // Prevent attempts to access this file directly
-if (!defined('SMF'))
+if (!defined('SMF')) {
     die('Hacking attempt...');
+}
 
 global $sites;
 
@@ -105,7 +108,8 @@ foreach ($sites as $si => $te) {
         $sites[$si]['lookup-pattern'] = array(
             'id' => '\[flash=\d+,\d+,http://static\.video\.yandex\.ru/lite/[\w-]+/(\w+\.\d+)/]',
             'w' => '\[flash=(d+),d+,',
-            'h' => '\[flash=d+,(d+),');
+            'h' => '\[flash=d+,(d+),'
+        );
         $sites[$si]['lookup-title'] = true;
     }
     // Fix for rutube.ru
@@ -121,11 +125,22 @@ foreach ($sites as $si => $te) {
         $sites[$si]['lookup-pattern'] = array('id' => 'video/embed/(\d+)"');
         $sites[$si]['lookup-title'] = true;
     }
+    // Fix for smotri.com
     if ($te['id'] == 'smo') {
         // http://smotri.com/video/view/?id=v24802498bff
         $sites[$si]['pattern'] = 'http://(?:www\.)?smotri\.com/video/view/\?id=v([0-9a-f]{10,})';
         $sites[$si]['movie'] = 'http://pics.smotri.com/player.swf?file=v$2&bufferTime=3&autoStart=false&str_lang=rus&xmlsource=http%3A%2F%2Fpics.smotri.com%2Fcskins%2Fblue%2Fskin_color.xml&xmldatasource=http%3A%2F%2Fpics.smotri.com%2Fskin_ng.xml';
         $sites[$si]['lookup-title'] = true;
+    }
+    // Fix for youtube.com html5
+    if ($te['id'] == 'ytb') {
+        $sites[$si]['plugin'] = 'html';
+        $sites[$si]['movie'] = '<iframe width="560" height="315" src="https://www.youtube.com/embed/$2" frameborder="0" allowfullscreen></iframe>';
+        $sites[$si]['lookup-title'] = '<title>(.*?)</title>';
+        $sites[$si]['lookup-title-skip'] = false;
+        $sites[$si]['lookup-url'] = '';
+        $sites[$si]['lookup-actual-url'] = '';
+        $sites[$si]['lookup-final-url'] = '';
     }
 }
 ?>
