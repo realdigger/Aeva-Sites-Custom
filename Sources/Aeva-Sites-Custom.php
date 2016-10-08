@@ -135,7 +135,7 @@ foreach ($sites as $si => $te) {
     // Fix for youtube.com html5
     if ($te['id'] == 'ytb') {
         $sites[$si]['plugin'] = 'html';
-        $sites[$si]['movie'] = '<iframe width="560" height="315" src="https://www.youtube.com/embed/$2" frameborder="0" allowfullscreen></iframe>';
+        $sites[$si]['movie'] = '<div style="margin-top: 15px;"><iframe width="560" height="315" src="https://www.youtube.com/embed/$2" frameborder="0" allowfullscreen></iframe></div>';
         $sites[$si]['lookup-title'] = '<title>(.*?)</title>';
         $sites[$si]['lookup-title-skip'] = false;
         $sites[$si]['lookup-url'] = '';
