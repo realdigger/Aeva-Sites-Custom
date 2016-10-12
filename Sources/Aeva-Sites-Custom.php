@@ -27,11 +27,11 @@ $sites[] = array(
     'website' => 'http://vk.com',
     'type' => 'custom',
     'plugin' => 'html',
-    'pattern' => 'http://(?:www\.)?vk(?:ontakte\.ru|\.com)/(?:.+=)?video([0-9\-]+)_([0-9]+)[^:\s#]*#hash([a-zA-Z0-9]+)',
+    'pattern' => 'https?://(?:www\.)?vk(?:ontakte\.ru|\.com)/(?:.+=)?video([0-9\-]+)_([0-9]+)[^:\s#]*#hash([a-zA-Z0-9]+)',
     'movie' => '<div style="margin-top: 15px;"><iframe src="http://vk.com/video_ext.php?oid=$2&id=$3&hash=$4" width="{int:width}" height="{int:height}" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe></div>',
     'size' => array(607, 360),
     'show-link' => true,
-    'fix-html-pattern' => '<iframe\s+src="http://(?:www\.)?vk(?:ontakte\.ru|\.com)/video_ext.php\?oid=([0-9\-]+)&id=([0-9]+)[^>]*>[^>]*</iframe>',
+    'fix-html-pattern' => '<div style="margin-top: 15px;"><iframe\s+src="http://(?:www\.)?vk(?:ontakte\.ru|\.com)/video_ext.php\?oid=([0-9\-]+)&id=([0-9]+)[^>]*>[^>]*</iframe></div>',
     'fix-html-url' => 'http://vk.com/video$1_$2',
     //'lookup-title' => '\\\\\\"md_title\\\\\\":\\\\\\"(.+)\\\\\\",\\\\\\"md_author\\\\\\"',
     'lookup-title-skip' => true,
@@ -39,6 +39,7 @@ $sites[] = array(
     'lookup-pattern' => array('hash' => '\\\\\\"hash2\\\\\\":\\\\\\"([a-zA-Z0-9]+)\\\\\\"'),
     'lookup-skip-empty' => true,
 );
+
 // vesti.ru
 $sites[] = array(
     // http://www.vesti.ru/videos?vid=522693&cid=1
@@ -47,7 +48,7 @@ $sites[] = array(
     'website' => 'http://www.vesti.ru',
     'type' => 'custom',
     'added' => '5.2',
-    'pattern' => 'http://(?:www\.)?vesti\.ru/(?:videos\?vid=)(\d+)',
+    'pattern' => 'https?://(?:www\.)?vesti\.ru/(?:videos\?vid=)(\d+)',
     'movie' => 'http://www.vesti.ru/i/flvplayer_videoHost.swf?vid=$2&fbv=true&isHome=false',
     'size' => array(408, 356),
     'show-link' => true,
@@ -55,6 +56,7 @@ $sites[] = array(
     'fix-html-pattern' => '<object [^>]*><param name=movie value="$1">.*?</object>',
     'fix-html-url' => 'http://www.vesti.ru/videos?vid=$2'
 );
+
 // rpod.ru
 $sites[] = array(
     // http://rpod.ru/305459
@@ -63,13 +65,14 @@ $sites[] = array(
     'title' => 'Rpod.ru',
     'website' => 'http://rpod.ru',
     'type' => 'custom',
-    'pattern' => 'http://(?:www\.)?rpod\.ru/(\d+)#id(\d+)',
+    'pattern' => 'https?://(?:www\.)?rpod\.ru/(\d+)#id(\d+)',
     'movie' => 'http://s.rpod.ru/swf/playa.swf?xmlURL=http%3A%2F%2Fs.rpod.ru%2Fxml%2Fvideo%2Fa$3.xml',
     'size' => array(500, 400),
     'lookup-title' => true,
     'lookup-url' => 'http://(?:www\.)?rpod\.ru/(\d+)',
     'lookup-pattern' => array('id' => 'rpod\.ru/get/\d+/(\d+)/flv'),
 );
+
 // coub.com
 $sites[] = array(
     'id' => 'coub',
@@ -77,14 +80,47 @@ $sites[] = array(
     'website' => 'http://Coub.com',
     'type' => 'custom',
     'plugin' => 'html',
-    'pattern' => 'http://(?:www\.)?coub.com/view/([0-9a-z]{8})',
+    'pattern' => 'https?://(?:www\.)?coub.com/view/([0-9a-z]+)',
     'size' => array(640, 360),
-    'movie' => '<iframe src="http://coub.com/embed/$2?muted=false&amp;autostart=false&amp;originalSize=false&amp;hideTopBar=false&amp;noSiteButtons=false&amp;startWithHD=false" allowfullscreen="true" frameborder="0" width="640" height="360"></iframe>',
+    'movie' => '<div style="margin-top: 15px;"><iframe src="http://coub.com/embed/$2?muted=false&amp;autostart=false&amp;originalSize=false&amp;hideTopBar=false&amp;noSiteButtons=false&amp;startWithHD=false" allowfullscreen="true" frameborder="0" width="640" height="360"></iframe></div>',
+    'lookup-title' => '<title>(.*?)</title>',
+
+);
+
+// twitch.tv channel
+$sites[] = array(
+    // http://www.twitch.tv/sanguiphilia
+    // <iframe src="https://player.twitch.tv/?channel=sanguiphilia" frameborder="0" scrolling="no" height="378" width="620"></iframe>
+    'id' => 'twitch_channel',
+    'title' => 'Twitch.tv (Channels)',
+    'website' => 'https://twitch.tv',
+    'type' => 'custom',
+    'plugin' => 'html',
+    'pattern' => 'https?://(?:www\.)twitch.tv/([a-z0-9_-]+)',
+    'size' => array(620, 378),
+    'movie' => '<div style="margin-top: 15px;"><iframe src="https://player.twitch.tv/?channel=$2" frameborder="0" scrolling="no" height="378" width="620"></iframe></div>',
+    'lookup-title' => false,
+);
+
+// twitch.tv video
+$sites[] = array(
+    // https://www.twitch.tv/warcraft/v/93935944
+    // <iframe src="https://player.twitch.tv/?video=v93935944" frameborder="0" scrolling="no" height="378" width="620"></iframe>
+    'id' => 'twitch_video',
+    'title' => 'Twitch.tv (Videos)',
+    'website' => 'https://twitch.tv',
+    'type' => 'custom',
+    'plugin' => 'html',
+    'pattern' => 'https?://(?:www\.)twitch.tv/[a-z0-9_-]+/v/(\d+)',
+    'size' => array(620, 378),
+    'movie' => '<div style="margin-top: 15px;"><iframe src="https://player.twitch.tv/?video=$2" frameborder="0" scrolling="no" height="378" width="620"></iframe></div>',
+    'lookup-title' => false,
 );
 
 
 /* -- CUSTOM SETTINGS FOR EXISTING SITES -- */
 foreach ($sites as $si => $te) {
+
     // Fix for vimeo.com
     if ($te['id'] == 'vimeo') {
         // http://vimeo.com/69277800
@@ -92,9 +128,10 @@ foreach ($sites as $si => $te) {
         // http://vimeo.com/channels/staffpicks/69208253
         // http://vimeo.com/ondemand/somegirls/69277800
         // http://vimeo.com/groups/musicvideo/videos/68422599
-        $sites[$si]['pattern'] = 'http://(?:www\.|player\.)?vimeo\.com/(?:video/|channels/[A-Za-z0-9_-]+/|ondemand/[A-Za-z0-9_-]+/|groups/[A-Za-z0-9_-]+/videos/)?(\d{1,12})';
+        $sites[$si]['pattern'] = 'https?://(?:www\.|player\.)?vimeo\.com/(?:video/|channels/[A-Za-z0-9_-]+/|ondemand/[A-Za-z0-9_-]+/|groups/[A-Za-z0-9_-]+/videos/)?(\d{1,12})';
         $sites[$si]['movie'] = 'http://vimeo.com/moogaloop.swf?clip_id=$2&server=vimeo.com&fullscreen=1&show_title=1&show_byline=1&show_portrait=0&color=01AAEA';
     }
+
     // Fix for video.yandex.ru
     if ($te['id'] == 'yax') {
         // http://video.yandex.ru/users/pugachev-alexander/view/8866/
@@ -112,6 +149,7 @@ foreach ($sites as $si => $te) {
         );
         $sites[$si]['lookup-title'] = true;
     }
+
     // Fix for rutube.ru
     if ($te['id'] == 'rut') {
         // http://rutube.ru/video/2f44d7dd01eacf0fc15f1eb0156cb877/?bmstart=1591
@@ -119,12 +157,13 @@ foreach ($sites as $si => $te) {
         // TODO: http://rutube.ru/tracks/1869729.html?v=b772eac9a287fb0494eda
         // TODO: http://rutube.ru/video/embed/6433492?wmode=direct
         $sites[$si]['plugin'] = 'html';
-        $sites[$si]['pattern'] = 'http://(?:www\.)?rutube\.ru/video/([0-9a-f]{32})*#id(\d+)';
+        $sites[$si]['pattern'] = 'https?://(?:www\.)?rutube\.ru/video/([0-9a-f]{32})*#id(\d+)';
         $sites[$si]['movie'] = '<div style="margin-top: 15px;"><iframe width="470" height="353" src="http://rutube.ru/video/embed/$3" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen></iframe></div>';
         $sites[$si]['lookup-url'] = 'http://(?:www\.)?rutube\.ru/video/([0-9a-f]{32})';
         $sites[$si]['lookup-pattern'] = array('id' => 'video/embed/(\d+)"');
         $sites[$si]['lookup-title'] = true;
     }
+
     // Fix for smotri.com
     if ($te['id'] == 'smo') {
         // http://smotri.com/video/view/?id=v24802498bff
@@ -132,9 +171,10 @@ foreach ($sites as $si => $te) {
         $sites[$si]['movie'] = 'http://pics.smotri.com/player.swf?file=v$2&bufferTime=3&autoStart=false&str_lang=rus&xmlsource=http%3A%2F%2Fpics.smotri.com%2Fcskins%2Fblue%2Fskin_color.xml&xmldatasource=http%3A%2F%2Fpics.smotri.com%2Fskin_ng.xml';
         $sites[$si]['lookup-title'] = true;
     }
-    // Fix for youtube.com html5
+    // Fix for youtube.com
     if ($te['id'] == 'ytb') {
         $sites[$si]['plugin'] = 'html';
+        $sites[$si]['pattern'] = 'https?://(?:video\.google\.(?:com|com?\.[a-z]{2}|[a-z]{2})/[^"]*?)?(?:(?:www|[a-z]{2})\.)?youtu(?:be\.com/[^"#[]*?(?:[&/?;]|&amp;|%[23]F)(?:video_id=|v(?:/|=|%3D|%2F))|\.be/)([\w-]{11})';
         $sites[$si]['movie'] = '<div style="margin-top: 15px;"><iframe width="560" height="315" src="https://www.youtube.com/embed/$2" frameborder="0" allowfullscreen></iframe></div>';
         $sites[$si]['lookup-title'] = '<title>(.*?)</title>';
         $sites[$si]['lookup-title-skip'] = false;
