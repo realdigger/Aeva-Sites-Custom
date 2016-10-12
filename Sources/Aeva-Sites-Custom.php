@@ -98,7 +98,7 @@ $sites[] = array(
     'plugin' => 'html',
     'pattern' => 'https?://(?:www\.)twitch.tv/([a-z0-9_-]+)',
     'size' => array(620, 378),
-    'movie' => '<div style="margin-top: 15px;"><iframe src="https://player.twitch.tv/?channel=$2" frameborder="0" scrolling="no" height="378" width="620"></iframe></div>',
+    'movie' => '<div style="margin-top: 15px;"><iframe id="channel_$2" src="https://player.twitch.tv/?channel=$2" frameborder="0" scrolling="no" height="378" width="620"></iframe><iframe id="chat_$2" style="width: 350px; height: 379px;" scrolling="no" frameborder="0" src="https://twitch.tv/$2/chat?popout="></iframe></div>',
     'lookup-title' => false,
 );
 
@@ -113,7 +113,7 @@ $sites[] = array(
     'plugin' => 'html',
     'pattern' => 'https?://(?:www\.)twitch.tv/[a-z0-9_-]+/v/(\d+)',
     'size' => array(620, 378),
-    'movie' => '<div style="margin-top: 15px;"><iframe src="https://player.twitch.tv/?video=$2" frameborder="0" scrolling="no" height="378" width="620"></iframe></div>',
+    'movie' => '<div style="margin-top: 15px;"><iframe id="video_$2" src="https://player.twitch.tv/?video=$2" frameborder="0" scrolling="no" height="378" width="620"></iframe></div>',
     'lookup-title' => false,
 );
 
